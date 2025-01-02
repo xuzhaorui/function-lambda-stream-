@@ -3,6 +3,7 @@ package com.fls.base;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class SupplierDemo {
     /**
@@ -18,13 +19,17 @@ public class SupplierDemo {
     public static void main(String[] args) {
         printUUID(6);
     }
+    // 你可以考虑使用 Stream.generate 来生成 UUID 列表，这样可以减少循环代码的冗余。
     public static void printUUID(int count) {
-        Supplier<String> uuidSupplier = () -> java.util.UUID.randomUUID().toString();
-        List<String> uuids = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            uuids.add(uuidSupplier.get());
-        }
-        System.out.println(uuids);
-
+        Stream.generate(() -> java.util.UUID.randomUUID().toString()).limit(count).forEach(System.out::println);
     }
+//    public static void printUUID(int count) {
+//        Supplier<String> uuidSupplier = () -> java.util.UUID.randomUUID().toString();
+//        List<String> uuids = new ArrayList<>();
+//        for (int i = 0; i < count; i++) {
+//            uuids.add(uuidSupplier.get());
+//        }
+//        System.out.println(uuids);
+//
+//    }
 }

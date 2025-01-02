@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -51,12 +52,17 @@ public class BiFunctionDemo {
         compute.forEach(System.out::println);
     }
 
+    //可以尝试优化 compute 方法，将 for 循环替换为 stream 操作，进一步简化代码。
     public static List<ComputeEmployee>  compute(List<Employee> employees, Double bonusRatio, BiFunction<Employee, Double, Double> biFunction){
-        List<ComputeEmployee> computeEmployees = new ArrayList<>();
-        for (Employee employee : employees) {
-            ComputeEmployee computeEmployee = new ComputeEmployee(employee.getName(), biFunction.apply(employee, bonusRatio));
-            computeEmployees.add(computeEmployee);
-        }
-        return computeEmployees;
+        return employees.stream().map(employee -> new ComputeEmployee(employee.getName(), biFunction.apply(employee, bonusRatio))).collect(Collectors.toList());
+
     }
+//    public static List<ComputeEmployee>  compute(List<Employee> employees, Double bonusRatio, BiFunction<Employee, Double, Double> biFunction){
+//        List<ComputeEmployee> computeEmployees = new ArrayList<>();
+//        for (Employee employee : employees) {
+//            ComputeEmployee computeEmployee = new ComputeEmployee(employee.getName(), biFunction.apply(employee, bonusRatio));
+//            computeEmployees.add(computeEmployee);
+//        }
+//        return computeEmployees;
+//    }
 }

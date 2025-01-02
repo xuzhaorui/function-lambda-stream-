@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
 
 public class UnaryOperatorDemo {
     /**
@@ -27,10 +28,14 @@ public class UnaryOperatorDemo {
     discount(doubles, discount).forEach(System.out::println);
 
     }
+    //以将 discount 方法改成使用 map 操作，这样能够更加简洁地处理集合元素。
     public static List<Double> discount(List<Double> doubles, UnaryOperator<Double> operator){
-        List<Double> discountDoubles = new ArrayList<>();
-
-        doubles.forEach((originalPrice) -> discountDoubles.add(operator.apply(originalPrice)));
-        return discountDoubles;
+      return   doubles.stream().map(operator).collect(Collectors.toList());
     }
+//    public static List<Double> discount(List<Double> doubles, UnaryOperator<Double> operator){
+//        List<Double> discountDoubles = new ArrayList<>();
+//
+//        doubles.forEach((originalPrice) -> discountDoubles.add(operator.apply(originalPrice)));
+//        return discountDoubles;
+//    }
 }

@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -45,12 +46,15 @@ public class PredicateAndPredicateDemo {
         })).forEach(System.out::println);
     }
     public static List<Account> filterAndDiscount(List<Account> accounts, Predicate<Account> predicate, Function<Account, Account> function) {
-        List<Account> result = new ArrayList<>();
-        accounts.forEach((account)->{
-            if (predicate.test(account)) {
-                result.add(function.apply(account));
-            }
-        });
-        return result;
+       return accounts.stream().filter(predicate).map(function).collect(Collectors.toList());
     }
+//    public static List<Account> filterAndDiscount(List<Account> accounts, Predicate<Account> predicate, Function<Account, Account> function) {
+//        List<Account> result = new ArrayList<>();
+//        accounts.forEach((account)->{
+//            if (predicate.test(account)) {
+//                result.add(function.apply(account));
+//            }
+//        });
+//        return result;
+//    }
 }
